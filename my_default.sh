@@ -93,13 +93,11 @@ function provisioning_start() {
 function provisioning_get_nodes() {
     for repo in "${NODES[@]}"; do
         IFS=":" read -r url branch <<<"${repo}"
-        url="${url:-}"
+        url="${url:-$repo}"
         branch="${branch:-}"
         dir="${url##*/}"
         path="/opt/ComfyUI/custom_nodes/${dir}"
         requirements="${path}/requirements.txt"
-        printf "URL: $url"
-        printf "Branch: $branch"
 
         if [[ -d $path ]]; then
             if [[ ${AUTO_UPDATE,,} != "false" ]]; then
