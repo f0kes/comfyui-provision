@@ -92,20 +92,33 @@ function provisioning_start() {
 
 function provisioning_get_nodes() {
     for repo in "${NODES[@]}"; do
-        dir="${repo##*/}"
+        url="${repo%%:*}"
+        branch="${repo#*:}"
+        dir="${url##*/}"
+        if [[ "$branch" == "$url" ]]; then
+            branch="" # No branch specified
+        fi
         path="/opt/ComfyUI/custom_nodes/${dir}"
         requirements="${path}/requirements.txt"
         if [[ -d $path ]]; then
             if [[ ${AUTO_UPDATE,,} != "false" ]]; then
                 printf "Updating node: %s...\n" "${repo}"
-                ( cd "$path" && git pull )
+                if [[ -n "$branch" ]]; then
+                    (cd "$path" && git fetch && git checkout "$branch" && git pull)
+                else
+                    (cd "$path" && git pull)
+                fi
                 if [[ -e $requirements ]]; then
                     micromamba -n comfyui run ${PIP_INSTALL} -r "$requirements"
                 fi
             fi
         else
             printf "Downloading node: %s...\n" "${repo}"
-            git clone "${repo}" "${path}" --recursive
+            if [[ -n "$branch" ]]; then
+                git clone -b "${branch}" "${url}" "${path}" --recursive
+            else
+                git clone "${url}" "${path}" --recursive
+            fi
             if [[ -e $requirements ]]; then
                 micromamba -n comfyui run ${PIP_INSTALL} -r "${requirements}"
             fi
