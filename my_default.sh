@@ -15,6 +15,7 @@ NODES=(
     "https://github.com/aravindhv10/ComfyUI-TiledDiffusion#fix_controlnet"
     "https://github.com/ltdrdata/ComfyUI-Impact-Pack"
     "https://github.com/ltdrdata/ComfyUI-Inspire-Pack"
+    "https://github.com/WASasquatch/was-node-suite-comfyui"
 )
 
 CHECKPOINT_MODELS=(
