@@ -93,7 +93,7 @@ function provisioning_start() {
 function provisioning_get_nodes() {
     for repo in "${NODES[@]}"; do
         url="${repo%%:*}"
-        branch="${repo#*:}"
+        branch="${repo##*:}"
         dir="${url##*/}"
         if [[ "$branch" == "$url" ]]; then
             branch="" # No branch specified
