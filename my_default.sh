@@ -92,12 +92,10 @@ function provisioning_start() {
 
 function provisioning_get_nodes() {
     for repo in "${NODES[@]}"; do
-        url="${repo%%:*}"
-        branch="${repo##*:}"
+        IFS=":" read -r url branch <<<"${repo}"
+        url="${url:-}"
+        branch="${branch:-}"
         dir="${url##*/}"
-        if [[ "$branch" == "$url" ]]; then
-            branch="" # No branch specified
-        fi
         path="/opt/ComfyUI/custom_nodes/${dir}"
         requirements="${path}/requirements.txt"
         if [[ -d $path ]]; then
