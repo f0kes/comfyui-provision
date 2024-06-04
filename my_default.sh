@@ -168,5 +168,5 @@ function provisioning_download() {
 }
 
 provisioning_start
-pip install gdown
-gdown https://drive.google.com/drive/folders/1upDm3Ef0GuBjkNLF7zsQTEgrBQRPJ0Ki -O /workspace/ComfyUI/input --folder
+micromamba -n comfyui run ${PIP_INSTALL} gdown
+micromamba -n comfyui run gdown https://drive.google.com/drive/folders/1upDm3Ef0GuBjkNLF7zsQTEgrBQRPJ0Ki -O /workspace/ComfyUI/input --folder
