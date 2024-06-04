@@ -12,7 +12,7 @@ PYTHON_PACKAGES=(
 
 NODES=(
     "https://github.com/ltdrdata/ComfyUI-Manager"
-    "https://github.com/aravindhv10/ComfyUI-TiledDiffusion:fix_controlnet"
+    "https://github.com/aravindhv10/ComfyUI-TiledDiffusion#fix_controlnet"
     "https://github.com/ltdrdata/ComfyUI-Impact-Pack"
     "https://github.com/ltdrdata/ComfyUI-Inspire-Pack"
 )
@@ -92,7 +92,7 @@ function provisioning_start() {
 
 function provisioning_get_nodes() {
     for repo in "${NODES[@]}"; do
-        IFS=":" read -r url branch <<<"${repo}"
+        IFS="#" read -r url branch <<<"${repo}"
         url="${url:-$repo}"
         branch="${branch:-}"
         dir="${url##*/}"
