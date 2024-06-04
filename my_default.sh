@@ -92,9 +92,9 @@ function provisioning_start() {
 
 function provisioning_get_nodes() {
     for repo in "${NODES[@]}"; do
-        dir="${repo%%:}"   # Extract directory name before colon
-        dir="${dir##/}"    # Remove everything before the last slash
-        branch="${repo#:}" # Extract branch name after colon
+        url="${repo%%:*}"
+        branch="${repo#*:}"
+        dir="${url##*/}"
         if [[ "$branch" == "$repo" ]]; then
             branch="" # No branch specified
         fi
